@@ -6,13 +6,6 @@ export type UserCreationParams = Pick<User, "email" | "name" | "password">;
 
 export class UsersService {
   public get(id: number, name?: string): User {
-    // return {
-    //   id,
-    //   email: "jane@doe.com",
-    //   name: name ?? "Jane  opasaas",
-    //   status: "Happy",
-    // };
-
     return {} as User;
   }
 

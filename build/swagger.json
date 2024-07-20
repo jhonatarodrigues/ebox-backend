@@ -91,6 +91,49 @@
 			},
 			"UserCreationParams": {
 				"$ref": "#/components/schemas/Pick_User.email-or-name-or-password_"
+			},
+			"DefaultSelection_Prisma._36_ProductsPayload_": {
+				"properties": {
+					"description": {
+						"type": "string"
+					},
+					"title": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"description",
+					"title",
+					"id"
+				],
+				"type": "object"
+			},
+			"ProductsPrisma": {
+				"$ref": "#/components/schemas/DefaultSelection_Prisma._36_ProductsPayload_",
+				"description": "Model Products"
+			},
+			"Pick_Product.title-or-description_": {
+				"properties": {
+					"title": {
+						"type": "string"
+					},
+					"description": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title",
+					"description"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"ProductsCreationParams": {
+				"$ref": "#/components/schemas/Pick_Product.title-or-description_"
 			}
 		},
 		"securitySchemes": {}
@@ -167,6 +210,55 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/UserCreationParams"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/product": {
+			"get": {
+				"operationId": "GetUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/ProductsPrisma"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			},
+			"post": {
+				"operationId": "CreateUser",
+				"responses": {
+					"201": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductsPrisma"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductsCreationParams"
 							}
 						}
 					}
