@@ -218,7 +218,7 @@
 		},
 		"/product": {
 			"get": {
-				"operationId": "GetUser",
+				"operationId": "Get",
 				"responses": {
 					"200": {
 						"description": "Ok",
@@ -238,7 +238,7 @@
 				"parameters": []
 			},
 			"post": {
-				"operationId": "CreateUser",
+				"operationId": "Create",
 				"responses": {
 					"201": {
 						"description": "Created",
@@ -263,6 +263,61 @@
 						}
 					}
 				}
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductsPrisma"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ProductsPrisma"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/product/{id}": {
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ProductsPrisma"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		}
 	},

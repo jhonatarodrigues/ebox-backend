@@ -21,4 +21,30 @@ export class ProductRepository {
 
     return result;
   }
+
+  public update(
+    productCreationParams: ProductsPrisma
+  ): Promise<ProductsPrisma> {
+    const result = prisma.products.update({
+      data: {
+        title: productCreationParams.title as string,
+        description: productCreationParams.description as string,
+      },
+      where: {
+        id: productCreationParams.id as number,
+      },
+    });
+
+    return result;
+  }
+
+  public delete(id: number): Promise<ProductsPrisma> {
+    const result = prisma.products.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return result;
+  }
 }

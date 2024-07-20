@@ -22,4 +22,26 @@ export class ProductService {
       return {} as ProductsPrisma;
     }
   }
+
+  public async update(params: ProductsPrisma): Promise<ProductsPrisma> {
+    const repository = new ProductRepository();
+    try {
+      const response = await repository.update(params);
+      return response;
+    } catch (error) {
+      console.log("error", error);
+      return {} as ProductsPrisma;
+    }
+  }
+
+  public async delete(id: number): Promise<ProductsPrisma> {
+    const repository = new ProductRepository();
+    try {
+      const response = await repository.delete(id);
+      return response;
+    } catch (error) {
+      console.log("error", error);
+      return {} as ProductsPrisma;
+    }
+  }
 }

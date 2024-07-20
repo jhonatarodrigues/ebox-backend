@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Path,
   Post,
+  Put,
   Query,
   Route,
   SuccessResponse,
@@ -17,7 +19,7 @@ import {
 @Route("product")
 export class ProductsController extends Controller {
   @Get("/")
-  public async getUser(): Promise<ProductsPrisma[]> {
+  public async get(): Promise<ProductsPrisma[]> {
     const response = new ProductService().get();
 
     return response;
@@ -25,11 +27,26 @@ export class ProductsController extends Controller {
 
   @SuccessResponse("201", "Created")
   @Post()
-  public async createUser(
+  public async create(
     @Body() requestBody: ProductsCreationParams
   ): Promise<ProductsPrisma> {
     const response = new ProductService().create(requestBody);
 
+    return response;
+  }
+
+  @Put()
+  public async update(
+    @Body() requestBody: ProductsPrisma
+  ): Promise<ProductsPrisma> {
+    const response = new ProductService().update(requestBody);
+
+    return response;
+  }
+
+  @Delete("/:id")
+  public async delete(@Path() id: string): Promise<ProductsPrisma> {
+    const response = new ProductService().delete(Number(id));
     return response;
   }
 }
