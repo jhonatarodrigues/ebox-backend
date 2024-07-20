@@ -9,8 +9,9 @@ import {
   Route,
   SuccessResponse,
 } from "tsoa";
-import { User } from "./user";
-import { UsersService, UserCreationParams } from "./usersService";
+import { User } from "../model/user";
+import { User as UserPrisma } from "@prisma/client";
+import { UsersService, UserCreationParams } from "../services/usersService";
 
 @Route("users")
 export class UsersController extends Controller {
@@ -22,13 +23,13 @@ export class UsersController extends Controller {
     return new UsersService().get(userId, name);
   }
 
-  @SuccessResponse("201", "Created") // Custom success response
+  @SuccessResponse("201", "Created")
   @Post()
   public async createUser(
     @Body() requestBody: UserCreationParams
-  ): Promise<void> {
-    this.setStatus(201); // set return status 201
-    new UsersService().create(requestBody);
-    return;
+  ): Promise<UserPrisma> {
+    const user = new UsersService().create(requestBody);
+
+    return user;
   }
 }

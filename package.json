@@ -5,6 +5,7 @@
   "author": "Jhonata Rodrigues <jhonata.rodrigues@syngenta.com>",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "5.17.0",
     "express": "^4.19.2",
     "tsoa": "^6.4.0"
   },
@@ -13,11 +14,11 @@
     "@types/node": "^20.14.11",
     "concurrently": "^8.2.2",
     "nodemon": "^3.1.4",
+    "prisma": "^5.17.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.3"
   },
   "scripts": {
-    "build": "tsoa spec-and-routes && tsc",
     "start": "node build/src/server.js",
     "routes": "tsoa routes",
     "dev": "concurrently \"nodemon\" \"nodemon -x tsoa spec-and-routes\""

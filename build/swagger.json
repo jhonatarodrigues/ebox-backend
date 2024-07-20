@@ -20,53 +20,77 @@
 						"type": "string"
 					},
 					"status": {
-						"type": "string",
-						"enum": [
-							"Happy",
-							"Sad"
-						]
+						"type": "string"
 					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
+					"password": {
+						"type": "string"
 					}
 				},
 				"required": [
 					"id",
 					"email",
 					"name",
-					"phoneNumbers"
+					"status",
+					"password"
 				],
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_User.email-or-name-or-phoneNumbers_": {
+			"DefaultSelection_Prisma._36_UserPayload_": {
 				"properties": {
-					"email": {
+					"status": {
+						"type": "number",
+						"format": "double"
+					},
+					"password": {
 						"type": "string"
 					},
 					"name": {
 						"type": "string"
 					},
-					"phoneNumbers": {
-						"items": {
-							"type": "string"
-						},
-						"type": "array"
+					"email": {
+						"type": "string"
+					},
+					"id": {
+						"type": "number",
+						"format": "double"
 					}
 				},
 				"required": [
-					"email",
+					"status",
+					"password",
 					"name",
-					"phoneNumbers"
+					"email",
+					"id"
+				],
+				"type": "object"
+			},
+			"UserPrisma": {
+				"$ref": "#/components/schemas/DefaultSelection_Prisma._36_UserPayload_",
+				"description": "Model User"
+			},
+			"Pick_User.email-or-name-or-password_": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"email",
+					"password"
 				],
 				"type": "object",
 				"description": "From T, pick a set of properties whose keys are in the union K"
 			},
 			"UserCreationParams": {
-				"$ref": "#/components/schemas/Pick_User.email-or-name-or-phoneNumbers_"
+				"$ref": "#/components/schemas/Pick_User.email-or-name-or-password_"
 			}
 		},
 		"securitySchemes": {}
@@ -125,7 +149,14 @@
 				"operationId": "CreateUser",
 				"responses": {
 					"201": {
-						"description": "Created"
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserPrisma"
+								}
+							}
+						}
 					}
 				},
 				"security": [],
