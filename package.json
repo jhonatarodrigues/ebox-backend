@@ -6,6 +6,8 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "5.17.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
     "tsoa": "^6.4.0"
   },

@@ -15,4 +15,14 @@ export class UsersRepository {
 
     return result;
   }
+
+  public findOne(email: string): Promise<UserPrisma | null> {
+    const result = prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    return result;
+  }
 }
