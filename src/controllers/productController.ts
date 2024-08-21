@@ -8,6 +8,7 @@ import {
   Put,
   Query,
   Route,
+  Security,
   SuccessResponse,
 } from "tsoa";
 import { Products as ProductsPrisma } from "@prisma/client";
@@ -18,6 +19,7 @@ import {
 
 @Route("product")
 export class ProductsController extends Controller {
+  @Security("jwt", ["admin"])
   @Get("/")
   public async get(): Promise<ProductsPrisma[]> {
     const response = new ProductService().get();

@@ -1,12 +1,7 @@
 import { RegisterRoutes } from "../build/routes";
-import express, {
-  Response as ExResponse,
-  Request as ExRequest,
-  NextFunction,
-  json,
-  urlencoded,
-} from "express";
-import { ValidateError } from "tsoa";
+import cors from "cors";
+import express, { json, urlencoded } from "express";
+import { ErrorHandler } from "./middlewares/ErrorHandler";
 
 export const app = express();
 
@@ -16,28 +11,9 @@ app.use(
   })
 );
 
-app.use(function errorHandler(
-  err: unknown,
-  req: ExRequest,
-  res: ExResponse,
-  next: NextFunction
-): ExResponse | void {
-  if (err instanceof ValidateError) {
-    console.warn(`Caught Validation Error for ${req.path}:`, err.fields);
-    return res.status(422).json({
-      message: "Validation Failed",
-      details: err?.fields,
-    });
-  }
-  if (err instanceof Error) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-    });
-  }
-
-  next();
-});
-
+app.use(cors());
 app.use(json());
 
 RegisterRoutes(app);
+
+app.use(ErrorHandler);

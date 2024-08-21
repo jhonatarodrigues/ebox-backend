@@ -14,14 +14,14 @@ import { UsersService, UserCreationParams } from "../services/usersService";
 
 @Route("users")
 export class UsersController extends Controller {
-  @Get("/login")
-  public async getLoginUser(
-    @Query() email: string,
-    @Query() password: string
+  @Post("/login")
+  public async loginUser(
+    @Body() requestBody: { email: string; password: string }
   ): Promise<UserPrisma | null> {
-    const response = new UsersService().login(email, password);
-
-    console.log("requestBody", email, password);
+    const response = new UsersService().login(
+      requestBody.email,
+      requestBody.password
+    );
 
     return response;
   }
