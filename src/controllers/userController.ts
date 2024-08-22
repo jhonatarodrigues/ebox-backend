@@ -1,32 +1,31 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Path,
-  Post,
-  Query,
-  Route,
-  SuccessResponse,
-} from "tsoa";
-import { User } from "../model/user";
+import { Body, Controller, Post, Route, Security, SuccessResponse } from "tsoa";
+
 import { User as UserPrisma } from "@prisma/client";
 import { UsersService, UserCreationParams } from "../services/usersService";
+import { generateToken } from "../utils/jwt";
 
 @Route("users")
 export class UsersController extends Controller {
   @Post("/login")
   public async loginUser(
     @Body() requestBody: { email: string; password: string }
-  ): Promise<UserPrisma | null> {
-    const response = new UsersService().login(
+  ): Promise<{ token: string } | null> {
+    const response = await new UsersService().login(
       requestBody.email,
       requestBody.password
     );
 
-    return response;
+    if (!response) {
+      return null;
+    }
+
+    const token = generateToken(response);
+
+    return { token };
   }
 
   @SuccessResponse("201", "Created")
+  @Security("jwt", ["admin"])
   @Post()
   public async createUser(
     @Body() requestBody: UserCreationParams

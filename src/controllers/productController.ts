@@ -19,7 +19,6 @@ import {
 
 @Route("product")
 export class ProductsController extends Controller {
-  @Security("jwt", ["admin"])
   @Get("/")
   public async get(): Promise<ProductsPrisma[]> {
     const response = new ProductService().get();
@@ -28,6 +27,7 @@ export class ProductsController extends Controller {
   }
 
   @SuccessResponse("201", "Created")
+  @Security("jwt", ["admin"])
   @Post()
   public async create(
     @Body() requestBody: ProductsCreationParams
@@ -37,6 +37,7 @@ export class ProductsController extends Controller {
     return response;
   }
 
+  @Security("jwt", ["admin"])
   @Put()
   public async update(
     @Body() requestBody: ProductsPrisma
@@ -46,6 +47,7 @@ export class ProductsController extends Controller {
     return response;
   }
 
+  @Security("jwt", ["admin"])
   @Delete("/:id")
   public async delete(@Path() id: string): Promise<ProductsPrisma> {
     const response = new ProductService().delete(Number(id));
