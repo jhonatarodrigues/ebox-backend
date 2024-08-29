@@ -9,7 +9,7 @@ export class UsersController extends Controller {
   @Post("/login")
   public async loginUser(
     @Body() requestBody: { email: string; password: string }
-  ): Promise<{ token: string } | null> {
+  ): Promise<{ token: string; name: string } | null> {
     const response = await new UsersService().login(
       requestBody.email,
       requestBody.password
@@ -21,7 +21,7 @@ export class UsersController extends Controller {
 
     const token = generateToken(response);
 
-    return { token };
+    return { token, name: response.name };
   }
 
   @SuccessResponse("201", "Created")

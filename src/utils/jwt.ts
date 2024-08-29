@@ -14,16 +14,6 @@ const generateToken = (payload: User) => {
 
   const token = jwt.sign(payload, secretKey, options);
 
-  jwt.verify(token, secretKey as string, function (err: any, decoded: any) {
-    console.log("err--- ", err);
-
-    if (err) {
-      throw new Error("Invalid token");
-    } else {
-      console.log("decoded", decoded);
-    }
-  });
-
   return token;
 };
 
