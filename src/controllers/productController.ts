@@ -10,12 +10,15 @@ import {
   Route,
   Security,
   SuccessResponse,
+  Request,
 } from "tsoa";
 import { Products as ProductsPrisma } from "@prisma/client";
+import express from "express";
 import {
   ProductService,
   ProductsCreationParams,
 } from "../services/productService";
+import { receiveFile } from "../services/storageMulter";
 
 @Route("product")
 export class ProductsController extends Controller {
@@ -30,9 +33,16 @@ export class ProductsController extends Controller {
   @Security("jwt", ["admin"])
   @Post()
   public async create(
-    @Body() requestBody: ProductsCreationParams
+    @Request() request: express.Request
   ): Promise<ProductsPrisma> {
-    const response = new ProductService().create(requestBody);
+    const fileResponse = await receiveFile(request);
+
+    const sendData = {
+      ...request.body,
+      file: fileResponse.filename,
+    };
+
+    const response = new ProductService().create(sendData);
 
     return response;
   }

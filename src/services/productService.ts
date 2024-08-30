@@ -2,7 +2,10 @@ import { Products as ProductsPrisma } from "@prisma/client";
 import { ProductRepository } from "../repository/productRepository";
 import { Product } from "../model/product";
 
-export type ProductsCreationParams = Pick<Product, "title" | "description">;
+export type ProductsCreationParams = Pick<
+  Product,
+  "title" | "description" | "file" | "quantity"
+>;
 
 export class ProductService {
   public async get(): Promise<ProductsPrisma[]> {

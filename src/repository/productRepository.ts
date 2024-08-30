@@ -16,6 +16,8 @@ export class ProductRepository {
       data: {
         title: productCreationParams.title as string,
         description: productCreationParams.description as string,
+        quantity: productCreationParams.quantity as string,
+        file: productCreationParams.file as string,
       },
     });
 
