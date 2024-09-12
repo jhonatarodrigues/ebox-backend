@@ -66,4 +66,32 @@ export class UsersService {
       return {} as UserPrisma;
     }
   }
+
+  public async getAll() {
+    const repository = new UsersRepository();
+
+    try {
+      const user = await repository.getAll();
+
+      return user;
+    } catch (error) {
+      console.log("error", error);
+
+      return [] as UserPrisma[];
+    }
+  }
+
+  public async delete(id: number): Promise<UserPrisma> {
+    const repository = new UsersRepository();
+
+    try {
+      const user = await repository.delete(id);
+
+      return user;
+    } catch (error) {
+      console.log("error", error);
+
+      return {} as UserPrisma;
+    }
+  }
 }

@@ -3,6 +3,15 @@ import { Products as ProductsPrisma } from "@prisma/client";
 import { ProductsCreationParams } from "../services/productService";
 
 export class ProductRepository {
+  public getById(id: number): Promise<ProductsPrisma | null> {
+    const result = prisma.products.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
+    return result;
+  }
   public get(): Promise<ProductsPrisma[]> {
     const result = prisma.products.findMany();
 
@@ -29,11 +38,10 @@ export class ProductRepository {
   ): Promise<ProductsPrisma> {
     const result = prisma.products.update({
       data: {
-        title: productCreationParams.title as string,
-        description: productCreationParams.description as string,
+        ...productCreationParams,
       },
       where: {
-        id: productCreationParams.id as number,
+        id: parseInt(String(productCreationParams.id), 11),
       },
     });
 

@@ -8,6 +8,11 @@ export type ProductsCreationParams = Pick<
 >;
 
 export class ProductService {
+  public async getById(id: number): Promise<ProductsPrisma | null> {
+    const repository = new ProductRepository();
+    return repository.getById(id);
+  }
+
   public async get(): Promise<ProductsPrisma[]> {
     const repository = new ProductRepository();
     return repository.get();

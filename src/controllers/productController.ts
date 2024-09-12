@@ -22,6 +22,13 @@ import { receiveFile } from "../services/storageMulter";
 
 @Route("product")
 export class ProductsController extends Controller {
+  @Get("/:id")
+  public async getById(@Path() id: string): Promise<ProductsPrisma | null> {
+    const response = new ProductService().getById(parseInt(id, 11));
+
+    return response;
+  }
+
   @Get("/")
   public async get(): Promise<ProductsPrisma[]> {
     const response = new ProductService().get();
@@ -50,9 +57,19 @@ export class ProductsController extends Controller {
   @Security("jwt", ["admin"])
   @Put()
   public async update(
-    @Body() requestBody: ProductsPrisma
+    @Request() request: express.Request
   ): Promise<ProductsPrisma> {
-    const response = new ProductService().update(requestBody);
+    const fileResponse = await receiveFile(request);
+
+    const sendData = {
+      ...request.body,
+      ...(fileResponse && fileResponse.filename
+        ? { file: fileResponse.filename }
+        : {}),
+    };
+    sendData.id = parseInt(String(sendData.id), 11);
+
+    const response = new ProductService().update(sendData);
 
     return response;
   }

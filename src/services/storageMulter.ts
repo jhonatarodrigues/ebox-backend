@@ -25,7 +25,7 @@ const receiveFile = (request: express.Request): Promise<any> => {
       }
       const file = request.file;
       if (!file) {
-        reject(new Error("File not uploaded"));
+        resolve({});
       }
       resolve(file);
     });

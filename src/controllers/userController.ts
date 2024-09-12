@@ -1,4 +1,14 @@
-import { Body, Controller, Post, Route, Security, SuccessResponse } from "tsoa";
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  Route,
+  Security,
+  SuccessResponse,
+  Delete,
+  Path,
+} from "tsoa";
 
 import { User as UserPrisma } from "@prisma/client";
 import { UsersService, UserCreationParams } from "../services/usersService";
@@ -26,11 +36,28 @@ export class UsersController extends Controller {
 
   @SuccessResponse("201", "Created")
   @Security("jwt", ["admin"])
+  @Get()
+  public async getUsers() {
+    const user = new UsersService().getAll();
+
+    return user;
+  }
+
+  @SuccessResponse("201", "Created")
+  @Security("jwt", ["admin"])
   @Post()
   public async createUser(
     @Body() requestBody: UserCreationParams
   ): Promise<UserPrisma> {
     const user = new UsersService().create(requestBody);
+
+    return user;
+  }
+
+  @Security("jwt", ["admin"])
+  @Delete("/:id")
+  public async delete(@Path() id: string): Promise<UserPrisma> {
+    const user = new UsersService().delete(Number(id));
 
     return user;
   }
