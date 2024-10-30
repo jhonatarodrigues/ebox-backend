@@ -9,17 +9,30 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String
-  password String
-  status Int
+  id        Int     @id @default(autoincrement())
+  email     String  @unique
+  name      String
+  password  String
+  status    Int
 }
 
 model Products {
-  id    Int     @id @default(autoincrement())
-  title String
+  id          Int     @id @default(autoincrement())
+  title       String
   description String
-  file String?
-  quantity String? 
+  file        String?
+  quantity    String? 
+  qrcodes     QRCode[]  @relation("product")
+}
+
+
+model QRCode {
+  id          Int     @id @default(autoincrement())
+  code        String
+  product_id  Int
+  views       Int
+  
+  
+  product Products @relation("product", fields: [product_id], references: [id], onDelete: NoAction)
+  
 }
